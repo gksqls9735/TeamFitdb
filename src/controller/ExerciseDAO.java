@@ -99,7 +99,7 @@ public class ExerciseDAO {
 	}
 
 	public boolean setExerciseUpdate(ExerciseVO ex) {
-		String sql = "UPDATE EXERCISE SET E_PRICE = ?, E_DATE = ?, E_TIME = ?, E_ADDR = ?";
+		String sql = "UPDATE EXERCISE SET E_PRICE = ?, E_DATE = ?, E_TIME = ?, E_ADDR = ? WHERE E_NO = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		boolean success = false;
@@ -112,7 +112,7 @@ public class ExerciseDAO {
 			pstmt.setString(2, ex.getE_date());
 			pstmt.setString(3, ex.getE_time());
 			pstmt.setString(4, ex.getE_addr());
-
+			pstmt.setInt(5, ex.getE_no());
 			int i = pstmt.executeUpdate();
 
 			if (i == 1) {

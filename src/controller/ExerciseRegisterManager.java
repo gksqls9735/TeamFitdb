@@ -100,6 +100,8 @@ public class ExerciseRegisterManager {
 			System.out.print("일련번호: ");
 			int e_no = Integer.parseInt(sc.nextLine());
 			
+			ed.setExerciseDelete(e_no);
+			
 			System.out.println();
 			System.out.println("강의 전체 리스트보기");
 			ed.getExerciseTotalList();
