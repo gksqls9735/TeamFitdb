@@ -11,7 +11,7 @@ public class MenuViewer {
 		System.out.println("해당 번호를 입력하세요.");
 		System.out.println("1. 유저 정보 목록/입력/수정/삭제");
 		System.out.println("2. 강의 정보 목록/입력/수정/삭제");
-		System.out.println("3. 수강 신청 목록/신청/취소");
+		System.out.println("3. 수강 신청 목록/신청/취소/조회");
 		System.out.println("4. 프로그램 종료");
 		System.out.print("번호 선택: ");
 	}
@@ -34,15 +34,13 @@ public class MenuViewer {
 		System.out.println("5. 메인 메뉴");			
 		System.out.print("번호 선택: ");			
 	}
-
-
-
 	public static void cartMenuView() {
 		System.out.println();
 		System.out.println("1. 수강 신청 목록");
 		System.out.println("2. 수강 신청");
 		System.out.println("3. 수강 취소");
-		System.out.println("4. 메인 메뉴");			
+		System.out.println("4. 강의 검색");
+		System.out.println("5. 메인 메뉴");			
 		System.out.print("번호 선택: ");	
 	}
 }

@@ -73,11 +73,15 @@ public class CartRegisterManager {
 
 		System.out.println("아이디: " + u_id);
 		ed.getExerciseTotalList();
-		System.out.println("강의 일련번호: ");
+		System.out.print("강의 일련번호: ");
 		e_no = Integer.parseInt(sc.nextLine());
-		System.out.println("결제 여부: ");
+		System.out.print("결제 여부: ");
 		c_ps = sc.nextLine().toUpperCase();
-
+		
+		cv.setU_id(u_id);
+		cv.setE_no(e_no);
+		cv.setC_payment_status(c_ps);
+		
 		cd.setCartRegister(cv);
 		System.out.println();
 		System.out.println("강의 신청한 리스트");
@@ -111,7 +115,7 @@ public class CartRegisterManager {
 		System.out.println();
 		cd.getCartTotal(u_id);
 		System.out.println("취소할 강의 신청 일련번호 입력: ");
-		System.out.println("일련번호: ");
+		System.out.print("일련번호: ");
 		c_no = Integer.parseInt(sc.nextLine());
 		cd.setCartDelete(c_no);
 		System.out.println();
@@ -119,5 +123,14 @@ public class CartRegisterManager {
 		cd.getCartTotal(u_id);
 		System.out.println();
 	}
-
+	
+	public void cartSearch() {
+		//제대로 검색이 되지 않음
+		CartDAO cd = new CartDAO();
+		ExerciseDAO ed = new ExerciseDAO();
+		System.out.println("검색할 운동 종목 입력");
+		System.out.print("운동종목: ");
+		String e_name = sc.nextLine();
+		ed.getExerciseSearch(e_name);
+	}
 }

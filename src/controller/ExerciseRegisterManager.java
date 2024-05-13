@@ -75,7 +75,7 @@ public class ExerciseRegisterManager {
 		ev.setE_time(e_time);
 		ev.setE_addr(e_addr);
 		
-		ed.setExerciseRegister(ev);
+		ed.setExerciseUpdate(ev);
 		System.out.println();
 		System.out.println("강의 전체 리스트");
 		ed.getExerciseTotalList();
@@ -97,7 +97,7 @@ public class ExerciseRegisterManager {
 			System.out.println();
 			
 			System.out.println("삭제할 강의의 일련번호 입력");
-			System.out.println("일련번호: ");
+			System.out.print("일련번호: ");
 			int e_no = Integer.parseInt(sc.nextLine());
 			
 			System.out.println();

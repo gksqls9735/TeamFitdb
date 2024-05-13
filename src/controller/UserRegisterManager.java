@@ -82,10 +82,6 @@ public class UserRegisterManager {
 		String u_no = ud.getUserNO(u_id, u_pw);
 		System.out.println("수정할 유저");
 		System.out.println("일련번호: " + u_no);
-
-		System.out.println();
-		System.out.print("아이디: ");
-		u_id = sc.nextLine();
 		System.out.print("비밀번호: ");
 		u_pw = sc.nextLine();
 		System.out.print("이름: ");

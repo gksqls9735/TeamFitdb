@@ -130,6 +130,9 @@ public class TeamfitMain {
 			System.out.println();
 			cartManager.cartDelete();
 			break;
+		case CART_CHOICE.SEARCH:
+			System.out.println();
+			cartManager.cartSearch();
 		case CART_CHOICE.MAIN:
 			return;
 		default:

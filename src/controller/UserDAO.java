@@ -31,6 +31,9 @@ public class UserDAO {
 				u.setU_name(rs.getString("U_NAME"));
 				u.setU_phone(rs.getString("U_PHONE"));
 				u.setIs_instructor(rs.getString("IS_INSTRUCTOR"));
+				System.out.println("---------------------------------");
+				System.out.println(u.toString());
+				System.out.println("---------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,18 +99,17 @@ public class UserDAO {
 	}
 
 	public void setUserUpdate(UserVO u) {
-		String sql = "UPDATE USERT SET U_ID = ?, U_PW = ?, U_NAME = ?, U_PHONE = ?";
+		String sql = "UPDATE USERT SET U_PW = ?, U_NAME = ?, U_PHONE = ? WHERE U_ID = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, u.getU_id());
-			pstmt.setString(2, u.getU_pw());
-			pstmt.setString(3, u.getU_name());
-			pstmt.setString(4, u.getU_phone());
-
+			pstmt.setString(1, u.getU_pw());
+			pstmt.setString(2, u.getU_name());
+			pstmt.setString(3, u.getU_phone());
+			pstmt.setString(4, u.getU_id());
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				System.out.println(u.getU_name() + "유저 수정 완료.");
@@ -262,6 +264,8 @@ public class UserDAO {
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
 			System.out.println("유저 정보 출력");
 			if (rs.next()) {
@@ -296,7 +300,7 @@ public class UserDAO {
 
 	public void setuserDelete(int u_no) {
 		
-		String sql = "DELETE FROM USERT WHERE U_NO = 2";
+		String sql = "DELETE FROM USERT WHERE U_NO = ?";
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
