@@ -1,25 +1,52 @@
 package main;
 
+import controller.CartDAO;
 import controller.CartRegisterManager;
 import controller.ExerciseRegisterManager;
 import controller.UserRegisterManager;
 import view.CART_CHOICE;
 import view.EXERCISE_CHOICE;
+import view.LOGIN_CHOICE;
+import view.LoginViewer;
 import view.MENU_CHOICE;
 import view.MenuViewer;
 import view.USER_CHOICE;
 
-
 public class TeamfitMain {
 
+	public static String id = null;
+	public static String pw = null;
+
 	public static void main(String[] args) {
+//		login();
 		mainMenu();
 	}
+/*
+	public static void login() {
+		int choiceNum = 0;
+		boolean success = false;
+		UserRegisterManager userManager = new UserRegisterManager();
+		while (true) {
+			LoginViewer.loginMenuView();
+			choiceNum = Integer.parseInt(LoginViewer.choice.nextLine());
 
+			switch (choiceNum) {
+			case LOGIN_CHOICE.LOGIN:
+				success = userManager.userLogin();
+				break;
+			case LOGIN_CHOICE.SIGNIN:
+				success = userManager.userRegister();
+				break;
+			case LOGIN_CHOICE.EXIT:
+				return;
+			}
+		}
+	}
+*/
 	public static void mainMenu() {
 		int choiceNum = 0;
-		
-		while(true) {
+
+		while (true) {
 			try {
 				MenuViewer.mainMenuView();
 				choiceNum = Integer.parseInt(MenuViewer.choice.nextLine());
@@ -33,10 +60,11 @@ public class TeamfitMain {
 					break;
 				case MENU_CHOICE.CATR:
 					cartMenu();
-					break;				
+					break;
 				case MENU_CHOICE.EXIT:
 					System.out.println("프로그램 종료");
-					System.exit(0);;
+					System.exit(0);
+					;
 				default:
 					System.out.println("해당 메뉴 번호만 입력하세요.");
 				}
@@ -44,9 +72,9 @@ public class TeamfitMain {
 				System.out.println("\n 입력에 오류가 있습니다. \n프로그램을 다시 시작하세요.");
 				return;
 			}
-		}	
-			
 		}
+
+	}
 
 	public static void userMenu() {
 		int choice;
@@ -83,7 +111,8 @@ public class TeamfitMain {
 		int choice;
 
 		ExerciseRegisterManager exerManager = new ExerciseRegisterManager();
-		MenuViewer.exerciseMenuView();;
+		MenuViewer.exerciseMenuView();
+		;
 		choice = Integer.parseInt(MenuViewer.choice.nextLine());
 
 		switch (choice) {
@@ -114,7 +143,8 @@ public class TeamfitMain {
 		int choice;
 
 		CartRegisterManager cartManager = new CartRegisterManager();
-		MenuViewer.cartMenuView();;
+		MenuViewer.cartMenuView();
+		;
 		choice = Integer.parseInt(MenuViewer.choice.nextLine());
 
 		switch (choice) {
@@ -139,6 +169,5 @@ public class TeamfitMain {
 			System.out.println("해당 메뉴 번호만 입력하세요.");
 		}
 	}
-	
 
 }

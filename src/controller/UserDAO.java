@@ -56,9 +56,9 @@ public class UserDAO {
 		}
 	}
 
-	public void setUserRegister(UserVO u) {
+	public boolean setUserRegister(UserVO u) {
 		String sql = "INSERT INTO USERT VALUES (USERT_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
-
+		boolean success = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -75,6 +75,7 @@ public class UserDAO {
 			if (i == 1) {
 				System.out.println(u.getU_name() + "유저 등록 완료.");
 				System.out.println("유저 등록 성공!");
+				success = true;
 			} else {
 				System.out.println("유저 등록 실패!");
 			}
@@ -95,7 +96,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-
+		return success;
 	}
 
 	public void setUserUpdate(UserVO u) {

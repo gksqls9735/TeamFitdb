@@ -9,12 +9,15 @@ public class ExerciseVO {
 	private String e_date;
 	private String e_time;
 	private String e_addr;
+	private int e_maxmem;
+	private int e_memcount;
 	
 	public ExerciseVO() {
 		super();
 	}
 
-	public ExerciseVO(int e_no, String e_name, int e_price, String e_date, String e_time, String e_addr) {
+	public ExerciseVO(int e_no, String e_name, int e_price, String e_date, String e_time, String e_addr, int e_maxmem,
+			int e_memcount) {
 		super();
 		this.e_no = e_no;
 		this.e_name = e_name;
@@ -22,6 +25,8 @@ public class ExerciseVO {
 		this.e_date = e_date;
 		this.e_time = e_time;
 		this.e_addr = e_addr;
+		this.e_maxmem = e_maxmem;
+		this.e_memcount = e_memcount;
 	}
 
 	public int getE_no() {
@@ -72,9 +77,25 @@ public class ExerciseVO {
 		this.e_addr = e_addr;
 	}
 	
+	public int getE_maxmem() {
+		return e_maxmem;
+	}
+
+	public void setE_maxmem(int e_maxmem) {
+		this.e_maxmem = e_maxmem;
+	}
+
+	public int getE_memcount() {
+		return e_memcount;
+	}
+
+	public void setE_memcount(int e_memcount) {
+		this.e_memcount = e_memcount;
+	}
+
 	@Override
 	public String toString() {
-		return "일련번호\t|" + e_no + "\n운동종목\t|" + e_name + "\n가격\t|" + e_price +
-				"\n날짜\t|" + e_date + "\n시작시간\t|" + e_time + "\n장소\t|" + e_addr;
+		return "일련번호\t|" + e_no + "\n운동종목\t|" + e_name + "\n가격\t|" + e_price + "원" +
+				"\n날짜\t|" + e_date + "\n시작시간\t|" + e_time + "\n장소\t|" + e_addr + "\n정원\t|" + e_memcount + "/" + e_maxmem + "명";
 	}
 }

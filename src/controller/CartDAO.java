@@ -87,6 +87,7 @@ public class CartDAO {
 
 	public void getCartTotal(String u_id) {
 		String sql = "SELECT C.C_NO AS C_NO, C.U_ID AS U_ID, U.U_NAME AS U_NAME, C.E_NO AS E_NO, "
+				+ "E.E_MEMCOUNT AS E_MEMCOUNT, E.E_MAXMEM AS E_MAXMEM, "
 				+ "E.E_NAME AS E_NAME, E.E_DATE AS E_DATE, E.E_TIME AS E_TIME, E.E_ADDR AS E_ADDR, "
 				+ "E.E_PRICE AS E_PRICE, C.C_PAYMENT_STATUS AS C_PAYMENT_STATUS " + "FROM CART C, EXERCISE E, USERT U "
 				+ "WHERE C.U_ID = ? AND C.E_NO = E.E_NO AND C.U_ID = U.U_ID " + "ORDER BY C_NO ASC";
@@ -104,7 +105,8 @@ public class CartDAO {
 			while (rs.next()) {
 				System.out.println("---------------------------------");
 				System.out.println("일련번호\t|" + rs.getInt("C_NO") + "\n학생ID\t|" + u_id + "\n유저이름\t|"
-						+ rs.getString("U_NAME") + "\n강의번호\t|" + rs.getInt("E_NO") + "\n운동종목\t|"
+						+ rs.getString("U_NAME") + "\n강의번호\t|" + rs.getInt("E_NO") + "\n정원\t|" 
+						+ rs.getInt("E_MEMCOUNT") + "/" + rs.getInt("E_MAXMEM") + "\n운동종목\t|"
 						+ rs.getString("E_NAME") + "\n강의날짜\t|" + rs.getString("E_DATE") + "\n강의시간\t|"
 						+ rs.getString("E_TIME") + "\n강의장소\t|" + rs.getString("E_ADDR") + "\n가격\t|" + rs.getInt("E_PRICE")
 						+ "\n결제여부\t|" + rs.getString("C_PAYMENT_STATUS"));

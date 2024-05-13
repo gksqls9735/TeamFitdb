@@ -8,6 +8,10 @@ public class UserRegisterManager {
 
 	public static Scanner sc = new Scanner(System.in);
 
+	public boolean userLogin() {
+		return false;
+	}
+	
 	public void userList() {
 		UserDAO ud = new UserDAO();
 		System.out.println("유저 전체 리스트");
@@ -23,11 +27,11 @@ public class UserRegisterManager {
 		}
 	}
 
-	public void userRegister() {
+	public boolean userRegister() {
 		UserDAO ud = new UserDAO();
 		UserVO uv = new UserVO();
 		boolean idCheck = false;
-
+		
 		String u_id = null;
 		System.out.println("유저 정보 입력");
 		do {
@@ -53,11 +57,12 @@ public class UserRegisterManager {
 		uv.setU_phone(u_phone);
 		uv.setIs_instructor(is_instructor);
 
-		ud.setUserRegister(uv);
+		boolean success = ud.setUserRegister(uv);
 		System.out.println();
 		System.out.println("유저 정보 리스트");
 		ud.getUser(u_id, u_pw);
 		System.out.println();
+		return success;
 	}
 
 	public void userUpdate() {
