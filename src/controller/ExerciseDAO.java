@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import model.ExerciseVO;
 
 public class ExerciseDAO {
-
+	
 	public void getExerciseTotalList() {
 
 		ExerciseVO ex = new ExerciseVO();
@@ -30,6 +30,8 @@ public class ExerciseDAO {
 				ex.setE_date(rs.getString("E_DATE"));
 				ex.setE_time(rs.getString("E_TIME"));
 				ex.setE_addr(rs.getString("E_ADDR"));
+				ex.setE_maxmem(rs.getInt("E_MAXMEM"));
+				ex.setE_memCount(rs.getInt("E_MEMCOUNT"));
 				System.out.println("---------------------------------");
 				System.out.println(ex.toString());
 				System.out.println("---------------------------------");
@@ -57,7 +59,7 @@ public class ExerciseDAO {
 
 	public void setExerciseRegister(ExerciseVO ex) {
 
-		String sql = "INSERT INTO exercise VALUES (EXERCISE_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO exercise VALUES (EXERCISE_SEQ.NEXTVAL, ?, ?, ?, ?, ?,?,?)";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -70,6 +72,8 @@ public class ExerciseDAO {
 			pstmt.setString(3, ex.getE_date());
 			pstmt.setString(4, ex.getE_time());
 			pstmt.setString(5, ex.getE_addr());
+			pstmt.setInt(6, ex.getE_maxmem());
+			pstmt.setInt(7, ex.getE_memCount());
 
 			int i = pstmt.executeUpdate();
 
@@ -180,35 +184,38 @@ public class ExerciseDAO {
 			}
 		}
 	}
+
 	public void getExerciseSearch(String e_name) {
 
 		String sql = "SELECT * FROM EXERCISE WHERE E_NAME = ? ORDER BY E_NO ASC";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, e_name);
 			rs = pstmt.executeQuery();
-			
-			 if (!rs.next()) {
-			        System.out.println("해당 종목의 강의가 존재하지 않습니다.");
-			    } else {
-			        do {
-			            ExerciseVO ev = new ExerciseVO();
-			            ev.setE_no(rs.getInt("E_NO"));
-			            ev.setE_name(rs.getString("E_NAME"));
-			            ev.setE_price(rs.getInt("E_PRICE"));
-			            ev.setE_date(rs.getString("E_DATE"));
-			            ev.setE_time(rs.getString("E_TIME"));
-			            ev.setE_addr(rs.getString("E_ADDR"));
-			            System.out.println("---------------------------------");
-			            System.out.println(ev.toString());
-			            System.out.println("---------------------------------");
-			        } while (rs.next());
-			    }
+
+			if (!rs.next()) {
+				System.out.println("해당 종목의 강의가 존재하지 않습니다.");
+			} else {
+				do {
+					ExerciseVO ev = new ExerciseVO();
+					ev.setE_no(rs.getInt("E_NO"));
+					ev.setE_name(rs.getString("E_NAME"));
+					ev.setE_price(rs.getInt("E_PRICE"));
+					ev.setE_date(rs.getString("E_DATE"));
+					ev.setE_time(rs.getString("E_TIME"));
+					ev.setE_addr(rs.getString("E_ADDR"));
+					ev.setE_maxmem(rs.getInt("E_MAXMEM"));
+					ev.setE_memCount(rs.getInt("E_MEMCOUNT"));
+					System.out.println("---------------------------------");
+					System.out.println(ev.toString());
+					System.out.println("---------------------------------");
+				} while (rs.next());
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -229,6 +236,5 @@ public class ExerciseDAO {
 			}
 		}
 	}
-	
 
 }

@@ -56,9 +56,9 @@ public class UserDAO {
 		}
 	}
 
-	public boolean setUserRegister(UserVO u) {
+	public void setUserRegister(UserVO u) {
 		String sql = "INSERT INTO USERT VALUES (USERT_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
-		boolean success = false;
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -75,7 +75,6 @@ public class UserDAO {
 			if (i == 1) {
 				System.out.println(u.getU_name() + "유저 등록 완료.");
 				System.out.println("유저 등록 성공!");
-				success = true;
 			} else {
 				System.out.println("유저 등록 실패!");
 			}
@@ -96,7 +95,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return success;
+
 	}
 
 	public void setUserUpdate(UserVO u) {
@@ -139,7 +138,7 @@ public class UserDAO {
 
 	public boolean getUserIdCheck(String id) {
 
-		String sql = "SELECT * FROM USERT WHERE U_ID = ?";
+		String sql = "SELECT * FROM USERT WHERE U_ID = ?"; // count로 바꾸기
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -177,7 +176,7 @@ public class UserDAO {
 
 	public boolean getUserLogin(String id, String pw) {
 
-		String sql = "SELECT * FROM USERT WHERE U_ID = ? AND U_PW = ?";
+		String sql = "SELECT * FROM USERT WHERE U_ID = ? AND U_PW = ?"; // count로 바꾸기
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -215,9 +214,9 @@ public class UserDAO {
 		return success;
 	}
 
-	public String getUserNO(String id, String pw) {
+	public String getUserNO(String id) {
 
-		String sql = "SELECT U_NO FROM USERT WHERE U_ID = ? AND U_PW = ?";
+		String sql = "SELECT U_NO FROM USERT WHERE U_ID = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -227,7 +226,6 @@ public class UserDAO {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				u_id = rs.getString("U_NO");
@@ -255,8 +253,8 @@ public class UserDAO {
 		return u_id;
 	}
 
-	public void getUser(String id, String pw) {
-		String sql = "SELECT * FROM USERT WHERE U_ID = ? AND U_PW = ?";
+	public void getUser(String u_id) {
+		String sql = "SELECT * FROM USERT WHERE U_ID = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -265,8 +263,8 @@ public class UserDAO {
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
+			pstmt.setString(1, u_id);
+
 			rs = pstmt.executeQuery();
 			System.out.println("유저 정보 출력");
 			if (rs.next()) {
@@ -276,7 +274,9 @@ public class UserDAO {
 				u.setU_name(rs.getString("U_NAME"));
 				u.setU_phone(rs.getString("U_PHONE"));
 				u.setIs_instructor(rs.getString("IS_INSTRUCTOR"));
+				System.out.println("---------------------------------");
 				System.out.println(u.toString());
+				System.out.println("---------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -299,18 +299,18 @@ public class UserDAO {
 		}
 	}
 
-	public void setuserDelete(int u_no) {
-		
-		String sql = "DELETE FROM USERT WHERE U_NO = ?";
-		
+	public void setuserDelete(String u_id) {
+
+		String sql = "DELETE FROM USERT WHERE U_ID = ?";
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setInt(1, u_no);
+			pstmt.setString(1, u_id);
 
 			int i = pstmt.executeUpdate();
 
@@ -337,13 +337,129 @@ public class UserDAO {
 			}
 		}
 	}
+
+	// 강사 정보를 확인
+	public String isInstructor(String u_id) {
+		String sql = "SELECT IS_INSTRUCTOR FROM USERT WHERE U_ID = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String checkInst = null;
+
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				checkInst = rs.getString("IS_INSTRUCTOR");				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return checkInst;
+	}
+
+	// 강사목록 보여주는 리스트
+	public void getInstList() {
+		String sql = "SELECT U_NO, U_ID, U_NAME FROM USERT WHERE IS_INSTRUCTOR = 'Y'";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int u_no = 0;
+		String u_id = null;
+		String u_name = null;
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				u_no = rs.getInt("U_NO");
+				u_id = rs.getString("U_ID");
+				u_name = rs.getString("U_NAME");
+				System.out.println("---------------------------------");
+				System.out.println("일련번호\t|" + u_no + "\n강사ID\t|" + u_id + "\n강사이름\t|" + u_name);
+				System.out.println("---------------------------------");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
-	
-	
-	
-	
-	
-	
+	//일련번호로 강사의 아이디가져오기
+	public String getInstId(int no) {
+		String sql = "SELECT U_ID FROM USERT WHERE U_NO = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String inst_id = null;
+		
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				inst_id = rs.getString("U_ID");				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return inst_id;
+	}
 	
 	
 	

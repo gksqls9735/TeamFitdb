@@ -7,7 +7,7 @@ public class UserVO {
 	private String u_name;
 	private String u_phone;
 	private String is_instructor;
-	
+
 	public UserVO() {
 		super();
 	}
@@ -69,11 +69,11 @@ public class UserVO {
 	public void setIs_instructor(String is_instructor) {
 		this.is_instructor = is_instructor;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "일련번호\t|" + u_no + "\n아이디\t|" + u_id + "\n비밀번호\t|" + u_pw +
-				"\n이름\t|" + u_name + "\n전화번호\t|" + u_phone + "\n강사여부\t|" + is_instructor;
-		
+		return "일련번호\t|" + u_no + "\n아이디\t|" + u_id + "\n비밀번호\t|" + u_pw + "\n이름\t|" + u_name + "\n전화번호\t|" + u_phone
+				+ "\n강사여부\t|" + is_instructor;
+
 	}
 }

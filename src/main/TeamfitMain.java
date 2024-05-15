@@ -1,49 +1,60 @@
 package main;
 
-import controller.CartDAO;
 import controller.CartRegisterManager;
 import controller.ExerciseRegisterManager;
+import controller.MatchsRegisterManager;
 import controller.UserRegisterManager;
-import view.CART_CHOICE;
-import view.EXERCISE_CHOICE;
 import view.LOGIN_CHOICE;
 import view.LoginViewer;
 import view.MENU_CHOICE;
+import view.MYPAGE_CHOICE;
 import view.MenuViewer;
-import view.USER_CHOICE;
 
 public class TeamfitMain {
 
-	public static String id = null;
-	public static String pw = null;
-
 	public static void main(String[] args) {
-//		login();
-		mainMenu();
+		String id = loginMenu();
+		mainMenu(id);
 	}
-/*
-	public static void login() {
+	//로그인, 회원가입 진행
+	private static String loginMenu() {
+		UserRegisterManager urm = new UserRegisterManager();
 		int choiceNum = 0;
-		boolean success = false;
-		UserRegisterManager userManager = new UserRegisterManager();
+		String id = null;
 		while (true) {
-			LoginViewer.loginMenuView();
-			choiceNum = Integer.parseInt(LoginViewer.choice.nextLine());
+			try {
+				LoginViewer.loginMenuView();
+				choiceNum = Integer.parseInt(LoginViewer.choice.nextLine());
 
-			switch (choiceNum) {
-			case LOGIN_CHOICE.LOGIN:
-				success = userManager.userLogin();
-				break;
-			case LOGIN_CHOICE.SIGNIN:
-				success = userManager.userRegister();
-				break;
-			case LOGIN_CHOICE.EXIT:
-				return;
+				switch (choiceNum) {
+				case LOGIN_CHOICE.LOGIN:	//로그인
+					System.out.println();
+					id = urm.userLogin();
+					return id;
+				case LOGIN_CHOICE.SIGNIN:	//회원가입
+					System.out.println();
+					id = urm.userRegister(); 
+					return id;
+				case LOGIN_CHOICE.EXIT:
+					System.out.println("프로그램 종료");
+					System.exit(0);
+				default:
+					System.out.println("해당 메뉴 번호만 입력하세요.");
+				}
+			} catch (Exception e) {
+				System.out.println("\n 입력에 오류가 있습니다. \n프로그램을 다시 시작하세요.");
+				System.exit(0);
 			}
 		}
+
 	}
-*/
-	public static void mainMenu() {
+	
+	//메인 메뉴
+	public static void mainMenu(String id) {
+		UserRegisterManager urm = new UserRegisterManager();
+		ExerciseRegisterManager erm = new ExerciseRegisterManager();
+		CartRegisterManager crm = new CartRegisterManager();
+		MatchsRegisterManager mrm = new MatchsRegisterManager();
 		int choiceNum = 0;
 
 		while (true) {
@@ -52,14 +63,29 @@ public class TeamfitMain {
 				choiceNum = Integer.parseInt(MenuViewer.choice.nextLine());
 
 				switch (choiceNum) {
-				case MENU_CHOICE.USER:
-					userMenu();
+				case MENU_CHOICE.MYPAGE:		//마이페이지 들어가기
+					System.out.println();
+					myPageMenu(id); 
 					break;
-				case MENU_CHOICE.EXERCISE:
-					exerciseMenu();
+				case MENU_CHOICE.SEARCH:		//강의 검색하기
+					System.out.println();
+					erm.exerciseList();
 					break;
-				case MENU_CHOICE.CATR:
-					cartMenu();
+				case MENU_CHOICE.APPLICATION:	//수강 신청
+					System.out.println();
+					crm.cartRegister(id);
+					break;
+				case MENU_CHOICE.DELETE:		//개별 수강 취소
+					System.out.println();
+					crm.cartDelete(id);
+					break;
+				case MENU_CHOICE.ALL_DELETE:	//전체 수강 취소
+					System.out.println();
+					crm.allCartDelete(id);
+					break;
+				case MENU_CHOICE.MATCHING:		//강사 매칭
+					System.out.println();
+					mrm.doMatch(id);
 					break;
 				case MENU_CHOICE.EXIT:
 					System.out.println("프로그램 종료");
@@ -75,99 +101,64 @@ public class TeamfitMain {
 		}
 
 	}
+	
+	//마이페이지
+	public static void myPageMenu(String id) {
+		UserRegisterManager urm = new UserRegisterManager();
+		ExerciseRegisterManager erm = new ExerciseRegisterManager();
+		CartRegisterManager crm = new CartRegisterManager();
+		MatchsRegisterManager mrm = new MatchsRegisterManager();
+		int choiceNum = 0;
 
-	public static void userMenu() {
-		int choice;
+		while (true) {
+			try {
+				MenuViewer.myPageView();
+				choiceNum = Integer.parseInt(MenuViewer.choice.nextLine());
 
-		UserRegisterManager userManager = new UserRegisterManager();
-		MenuViewer.userMenuView();
-		choice = Integer.parseInt(MenuViewer.choice.nextLine());
-
-		switch (choice) {
-		case USER_CHOICE.LIST:
-			System.out.println();
-			userManager.userList();
-			break;
-		case USER_CHOICE.INSERT:
-			System.out.println();
-			userManager.userRegister();
-			break;
-		case USER_CHOICE.UPDATE:
-			System.out.println();
-			userManager.userUpdate();
-			break;
-		case USER_CHOICE.DELETE:
-			System.out.println();
-			userManager.userDelete();
-			break;
-		case USER_CHOICE.MAIN:
-			return;
-		default:
-			System.out.println("해당 메뉴 번호만 입력하세요.");
+				switch (choiceNum) {
+				case MYPAGE_CHOICE.MYINFO:		//개인 정보 확인
+					System.out.println();
+					urm.userInfo(id);
+					break;
+				case MYPAGE_CHOICE.UPDATE:		//개인 정보 수정
+					System.out.println();
+					urm.userUpdate(id);
+					break;
+				case MYPAGE_CHOICE.MYLIST:		//수강 신청 목록
+					System.out.println();
+					crm.cartList(id);
+					break;
+				case MYPAGE_CHOICE.DELETE:		//계정 삭제
+					System.out.println();
+					urm.userDelete(id);
+					System.exit(0);;
+				case MYPAGE_CHOICE.INST_INFO:	//매칭된 강사 정보 확인
+					System.out.println();
+					mrm.myMatchInfo(id);
+					break;
+				case MYPAGE_CHOICE.INSERT_EXER:	//강의 개설(강사만)
+					System.out.println();
+					erm.exerciseRegister(id);
+					break;
+				case MYPAGE_CHOICE.UPDATE_EXER:	//강의 수정(강사만)
+					System.out.println();
+					erm.exerciseUpdate(id);
+					break;
+				case MYPAGE_CHOICE.DELETE_EXER:	//강의 취소(강사만)
+					System.out.println();
+					erm.exerciseDelete(id);
+					break;
+				case MYPAGE_CHOICE.EXIT:
+					System.out.println("메인페이지로 돌아갑니다.");
+					return;
+				default:
+					System.out.println("해당 메뉴 번호만 입력하세요.");
+				}
+			} catch (Exception e) {
+				System.out.println("\n 입력에 오류가 있습니다. \n프로그램을 다시 시작하세요.");
+				return;
+			}
 		}
 	}
-
-	public static void exerciseMenu() {
-		int choice;
-
-		ExerciseRegisterManager exerManager = new ExerciseRegisterManager();
-		MenuViewer.exerciseMenuView();
-		;
-		choice = Integer.parseInt(MenuViewer.choice.nextLine());
-
-		switch (choice) {
-		case EXERCISE_CHOICE.LIST:
-			System.out.println();
-			exerManager.exerciseList();
-			break;
-		case EXERCISE_CHOICE.INSERT:
-			System.out.println();
-			exerManager.exerciseRegister();
-			break;
-		case EXERCISE_CHOICE.UPDATE:
-			System.out.println();
-			exerManager.exerciseUpdate();
-			break;
-		case EXERCISE_CHOICE.DELETE:
-			System.out.println();
-			exerManager.exerciseDelete();
-			break;
-		case EXERCISE_CHOICE.MAIN:
-			return;
-		default:
-			System.out.println("해당 메뉴 번호만 입력하세요.");
-		}
-	}
-
-	public static void cartMenu() {
-		int choice;
-
-		CartRegisterManager cartManager = new CartRegisterManager();
-		MenuViewer.cartMenuView();
-		;
-		choice = Integer.parseInt(MenuViewer.choice.nextLine());
-
-		switch (choice) {
-		case CART_CHOICE.LIST:
-			System.out.println();
-			cartManager.cartList();
-			break;
-		case CART_CHOICE.INSERT:
-			System.out.println();
-			cartManager.cartRegister();
-			break;
-		case CART_CHOICE.DELETE:
-			System.out.println();
-			cartManager.cartDelete();
-			break;
-		case CART_CHOICE.SEARCH:
-			System.out.println();
-			cartManager.cartSearch();
-		case CART_CHOICE.MAIN:
-			return;
-		default:
-			System.out.println("해당 메뉴 번호만 입력하세요.");
-		}
-	}
-
+	
 }

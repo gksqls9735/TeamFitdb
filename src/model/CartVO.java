@@ -8,7 +8,7 @@ public class CartVO {
 	private int e_no;
 	private Date c_enrollment_date;
 	private String c_payment_status;
-	
+
 	public CartVO() {
 		super();
 	}
@@ -61,10 +61,10 @@ public class CartVO {
 	public void setC_payment_status(String c_payment_status) {
 		this.c_payment_status = c_payment_status;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "일련번호\t|" + c_no + "\n유저ID\t|" + u_id + "\n강의번호\t|" + e_no +
-				"\n신청날짜\t|" + c_enrollment_date + "\n결제여부\t|" + c_payment_status;
+		return "일련번호\t|" + c_no + "\n유저ID\t|" + u_id + "\n강의번호\t|" + e_no + "\n신청날짜\t|" + c_enrollment_date
+				+ "\n결제여부\t|" + c_payment_status;
 	}
 }
