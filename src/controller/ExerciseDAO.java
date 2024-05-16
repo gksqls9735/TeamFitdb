@@ -245,26 +245,65 @@ public class ExerciseDAO {
 		}
 	}
 
+	// 운동 일련번호로 신청인원 수 가져오기
+	public int getMemCount(int e_no) {
+
+		String sql = "SELECT E_MEMCOUNT FROM EXERCISE WHERE E_NO = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int memCount = 0;
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, e_no);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				memCount = rs.getInt("E_MEMCOUNT");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+
 	// 신청인원 늘리기
-	public void memCountIncrease(Map<Integer, Integer> e_noCountList) {
-		// 키를 where로 하고 update값을 get(key)+1로 설정
+	public void memCountIncrease(int e_no, int memCount) {
+
 		String sql = "UPDATE EXERCISE SET E_MEMCOUNT = ? WHERE E_NO = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
-			for (Integer data : e_noCountList.keySet()) {
-				pstmt.setInt(1, e_noCountList.get(data) + 1);
-				pstmt.setInt(2, data);
-				int i = pstmt.executeUpdate();
+			pstmt.setInt(1, memCount);
+			pstmt.setInt(2, e_no);
+			int i = pstmt.executeUpdate();
 
-				if (i == 1) {
-					System.out.println("신청인원 추가 성공!");
-				} else {
-					System.out.println("신청인원 추가 실패!");
-				}
+			if (i > 0) {
+				System.out.println("신청인원 추가 성공!");
+			} else {
+				System.out.println("신청인원 추가 실패!");
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -284,50 +323,28 @@ public class ExerciseDAO {
 
 	}
 
-	// 신청인원 줄이기
+	// 신청인원 줄이기	// 신청인원 줄이기
 	public void memCountReduce(Map<Integer, Integer> e_noCountList) {
-		// 키를 where로 하고 update값을 get(key)-1로 설정
+
 		String sql = "UPDATE EXERCISE SET E_MEMCOUNT = ? WHERE E_NO = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int count = 1;
-
+		int i = 0;
 		try {
 			con = DBUtil.makeConnection();
-			con.setAutoCommit(false); // 트랜잭션 관리 시작
 			pstmt = con.prepareStatement(sql);
-
-			System.out.println("memCountReduce 메서드 호출 - 총 항목 수: " + e_noCountList.size());
-			for (Integer data : e_noCountList.keySet()) {
-				int currentCount = e_noCountList.get(data);
-				int newCount = currentCount - 1;
-
-				if (newCount < 0) {
-					System.out.println("신청인원은 0보다 작을 수 없습니다! (E_NO: " + data + ")");
-					continue;
-				}
-
-				pstmt.setInt(1, newCount);
-				pstmt.setInt(2, data);
-				int i = pstmt.executeUpdate();
-
-				System.out.println("제대로 작동하는지 확인 - 항목 번호: " + count++);
-				if (i == 1) {
-					System.out.println("신청인원 줄이기 성공! (E_NO: " + data + ", 새로운 신청인원: " + newCount + ")");
-				} else {
-					System.out.println("신청인원 줄이기 실패! (E_NO: " + data + ")");
-				}
+			for (Integer key : e_noCountList.keySet()) {
+				pstmt.setInt(1, e_noCountList.get(key) - 1);
+				pstmt.setInt(2, key);
+				i = pstmt.executeUpdate();
+			}
+			if (i > 0) {
+				System.out.println("신청인원 감소 성공!");
+			} else {
+				System.out.println("신청인원 감소 실패!");
 			}
 
-			con.commit(); // 트랜잭션 커밋
 		} catch (SQLException e) {
-			if (con != null) {
-				try {
-					con.rollback(); // 오류 발생 시 롤백
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-				}
-			}
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
