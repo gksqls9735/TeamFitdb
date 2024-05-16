@@ -7,7 +7,8 @@ import model.ExerciseVO;
 public class ExerciseRegisterManager {
 
 	public static Scanner sc = new Scanner(System.in);
-
+	
+	//강의 전체 리스트 출력
 	public void exerciseList() {
 		ExerciseDAO ed = new ExerciseDAO();
 		System.out.println("강의 전체 리스트");
@@ -15,6 +16,7 @@ public class ExerciseRegisterManager {
 		System.out.println();
 	}
 
+	//강의 개설
 	public void exerciseRegister(String id) {
 		UserDAO ud = new UserDAO();
 
@@ -56,6 +58,7 @@ public class ExerciseRegisterManager {
 		System.out.println();
 	}
 
+	//강의 수정
 	public void exerciseUpdate(String id) {
 		UserDAO ud = new UserDAO();
 
@@ -99,6 +102,7 @@ public class ExerciseRegisterManager {
 		System.out.println();
 	}
 
+	//강의 삭제
 	public void exerciseDelete(String id) {
 		UserDAO ud = new UserDAO();
 
@@ -125,6 +129,15 @@ public class ExerciseRegisterManager {
 		ed.getExerciseTotalList();
 		System.out.println();
 
+	}
+	
+	//운동 종목명으로 강의 검색
+	public void exerciseSearch() {
+		ExerciseDAO ed = new ExerciseDAO();
+		System.out.println("검색할 운동 종목 입력");
+		System.out.print("운동종목: ");
+		String e_name = sc.nextLine();
+		ed.getExerciseSearch(e_name);
 	}
 
 }

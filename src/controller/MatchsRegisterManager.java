@@ -6,6 +6,7 @@ public class MatchsRegisterManager {
 
 	Scanner sc = new Scanner(System.in);
 
+	//강사 매칭
 	public void doMatch(String mem_id) {
 		MatchsDAO md = new MatchsDAO();
 		UserDAO ud = new UserDAO();

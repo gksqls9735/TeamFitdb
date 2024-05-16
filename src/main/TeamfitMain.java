@@ -1,6 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import controller.CartDAO;
 import controller.CartRegisterManager;
+import controller.ExerciseDAO;
 import controller.ExerciseRegisterManager;
 import controller.MatchsRegisterManager;
 import controller.UserRegisterManager;
@@ -69,7 +74,7 @@ public class TeamfitMain {
 					break;
 				case MENU_CHOICE.SEARCH:		//강의 검색하기
 					System.out.println();
-					erm.exerciseList();
+					erm.exerciseSearch();;
 					break;
 				case MENU_CHOICE.APPLICATION:	//수강 신청
 					System.out.println();

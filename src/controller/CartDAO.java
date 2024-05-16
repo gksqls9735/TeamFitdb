@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.CartVO;
 import model.ExerciseVO;
 
 public class CartDAO {
 
+	// 수강 신청
 	public void setCartRegister(CartVO c) {
 		String sql = "INSERT INTO CART VALUES (CART_SEQ.NEXTVAL, ?, ?, SYSDATE, ?)";
 		Connection con = null;
@@ -48,6 +52,7 @@ public class CartDAO {
 		}
 	}
 
+	// 개별 수강 취소
 	public void setCartDelete(int c_no) {
 		String sql = "DELETE FROM CART WHERE C_NO = ?";
 
@@ -101,7 +106,7 @@ public class CartDAO {
 			if (rs.next()) {
 				if (rs.getInt("COUNT(*)") == 0) {
 					check = true;
-				}				
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,6 +171,7 @@ public class CartDAO {
 		}
 	}
 
+	// 수강 내역 
 	public void getCartTotal(String u_id) {
 		String sql = "SELECT C.C_NO AS C_NO, C.U_ID AS U_ID, U.U_NAME AS U_NAME, C.E_NO AS E_NO, "
 				+ "E.E_NAME AS E_NAME, E.E_DATE AS E_DATE, E.E_TIME AS E_TIME, E.E_ADDR AS E_ADDR, "
@@ -211,4 +217,88 @@ public class CartDAO {
 			}
 		}
 	}
+
+	// 강의 코드 일련번호 1개 가져오기
+	public Map<Integer, Integer> getCartE_NO(int c_no) {
+		Map<Integer, Integer> e_noCountMap = new HashMap<>();
+		String sql = "SELECT C.E_NO AS E_NO, E.E_MEMCOUNT AS E_MEMCOUNT "
+				+ "FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.C_NO = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int e_no = 0;
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, c_no);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				e_noCountMap.put(rs.getInt("E_NO"), rs.getInt("E_MEMCOUNT"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+//		System.out.println(e_noCountMap.size());
+		return e_noCountMap;
+	}
+
+	// 강의 코드 일련번호 리스트 가져오기
+	public Map<Integer, Integer> getCartE_NOList(String id) {
+		Map<Integer, Integer> e_noCountMapList = new HashMap<>();
+		String sql = "SELECT C.E_NO AS E_NO, E.E_MEMCOUNT AS E_MEMCOUNT FROM CART C "
+				+ "INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.U_ID = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			int count = 0;
+			while (rs.next()) {
+				e_noCountMapList.put(rs.getInt("E_NO"), rs.getInt("E_MEMCOUNT"));
+				System.out.println(count++);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return e_noCountMapList;
+	}
+
 }

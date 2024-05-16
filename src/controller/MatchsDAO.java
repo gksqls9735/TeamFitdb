@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class MatchsDAO {
-	// matching
+	// 강사 매칭
 	public void setMatchs(String inst_id, String mem_id) {
 		String sql = "INSERT INTO MATCHS VALUES(MATCHS_SEQ.NEXTVAL, ?, ?, SYSDATE)";
 		
@@ -46,7 +46,7 @@ public class MatchsDAO {
 		}
 	}
 
-	// delete
+	// 매칭 취소
 	public void deleteMatchs(String mem_id) {
 		String sql = "DELETE FROM MATCHS WHERE MEM_ID = ?";
 		

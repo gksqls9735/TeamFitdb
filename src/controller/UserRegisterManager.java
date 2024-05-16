@@ -48,6 +48,7 @@ public class UserRegisterManager {
 				System.out.println("중복된 아이디입니다.");
 			}
 		} while (idCheck);
+		
 		System.out.print("비밀번호: ");
 		String u_pw = sc.nextLine();
 		System.out.print("이름: ");

@@ -138,7 +138,7 @@ public class UserDAO {
 
 	public boolean getUserIdCheck(String id) {
 
-		String sql = "SELECT * FROM USERT WHERE U_ID = ?"; // count로 바꾸기
+		String sql = "SELECT * FROM USERT WHERE U_ID = ?"; 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -176,7 +176,7 @@ public class UserDAO {
 
 	public boolean getUserLogin(String id, String pw) {
 
-		String sql = "SELECT * FROM USERT WHERE U_ID = ? AND U_PW = ?"; // count로 바꾸기
+		String sql = "SELECT COUNT(*) FROM USERT WHERE U_ID = ? AND U_PW = ?"; // count로 바꾸기
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
