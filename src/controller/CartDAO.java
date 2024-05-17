@@ -213,7 +213,7 @@ public class CartDAO {
 		}
 	}
 
-	// 수강 내역
+	// 수강 내역 !
 	public void getCartTotal(String u_id) {
 		String sql = "SELECT C.C_NO AS C_NO, C.U_ID AS U_ID, U.U_NAME AS U_NAME, C.E_NO AS E_NO, "
 				+ "E.E_NAME AS E_NAME, E.E_DATE AS E_DATE, E.E_TIME AS E_TIME, E.E_ADDR AS E_ADDR, "
@@ -260,7 +260,7 @@ public class CartDAO {
 		}
 	}
 
-	// 강의 코드 일련번호 1개 가져오기
+	// 강의 코드 일련번호 1개 가져오기 !
 	public Map<Integer, Integer> getCartE_NO(int c_no) {
 		Map<Integer, Integer> e_noCountMap = new HashMap<>();
 	    String sql = "SELECT C.E_NO, E.E_MEMCOUNT FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.C_NO = ?";
@@ -299,7 +299,7 @@ public class CartDAO {
 	    return e_noCountMap;
 	}
 
-	// 강의 코드 일련번호 리스트 가져오기
+	// 강의 코드 일련번호 리스트 가져오기 !
 	public Map<Integer, Integer> getCartE_NOList(String id) {
 		Map<Integer, Integer> e_noCountMapList = new HashMap<>();
 		String sql = "SELECT C.E_NO, E.E_MEMCOUNT FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.U_ID = ?";

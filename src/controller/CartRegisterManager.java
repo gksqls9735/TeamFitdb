@@ -89,7 +89,7 @@ public class CartRegisterManager {
 
 		System.out.println();
 		cd.getCartTotal(id);
-		System.out.println("취소할 강의 신청 일련번호 입력: ");
+		System.out.println("취소할 강의 신청 일련번호 입력");
 		System.out.print("일련번호: ");
 		int c_no = Integer.parseInt(sc.nextLine());
 		ed.memCountReduce(cd.getCartE_NO(c_no));

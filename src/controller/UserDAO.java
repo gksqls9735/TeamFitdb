@@ -11,7 +11,8 @@ import model.UserVO;
 public class UserDAO {
 
 	public static Scanner sc = new Scanner(System.in);
-
+	
+	// 유저 전체 정보
 	public void getUserTotalList() {
 		String sql = "SELECT * FROM USERT ORDER BY U_NO ASC";
 		Connection con = null;
@@ -56,6 +57,7 @@ public class UserDAO {
 		}
 	}
 
+	// 유저 등록
 	public void setUserRegister(UserVO u) {
 		String sql = "INSERT INTO USERT VALUES (USERT_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
 
@@ -98,6 +100,7 @@ public class UserDAO {
 
 	}
 
+	// 유저 정보 수정
 	public void setUserUpdate(UserVO u) {
 		String sql = "UPDATE USERT SET U_PW = ?, U_NAME = ?, U_PHONE = ? WHERE U_ID = ?";
 		Connection con = null;
@@ -136,6 +139,7 @@ public class UserDAO {
 		}
 	}
 
+	// 아이디 확인
 	public boolean getUserIdCheck(String id) {
 
 		String sql = "SELECT * FROM USERT WHERE U_ID = ?"; 
@@ -174,6 +178,7 @@ public class UserDAO {
 		return idResult;
 	}
 
+	// 로그인
 	public boolean getUserLogin(String id, String pw) {
 
 		String sql = "SELECT COUNT(*) FROM USERT WHERE U_ID = ? AND U_PW = ?"; // count로 바꾸기
@@ -214,6 +219,7 @@ public class UserDAO {
 		return success;
 	}
 
+	// 유저 일련번호 가져오기
 	public String getUserNO(String id) {
 
 		String sql = "SELECT U_NO FROM USERT WHERE U_ID = ?";
@@ -253,6 +259,7 @@ public class UserDAO {
 		return u_id;
 	}
 
+	// 유저 정보 출력
 	public void getUser(String u_id) {
 		String sql = "SELECT * FROM USERT WHERE U_ID = ?";
 		Connection con = null;
@@ -299,6 +306,7 @@ public class UserDAO {
 		}
 	}
 
+	// 유저 삭제
 	public void setuserDelete(String u_id) {
 
 		String sql = "DELETE FROM USERT WHERE U_ID = ?";
@@ -315,10 +323,10 @@ public class UserDAO {
 			int i = pstmt.executeUpdate();
 
 			if (i == 1) {
-				System.out.println("강의 삭제 완료.");
-				System.out.println("강의 삭제 성공!!!");
+				System.out.println("유저 삭제 완료.");
+				System.out.println("유저 삭제 성공!!!");
 			} else {
-				System.out.println("강의 삭제 실패!!!");
+				System.out.println("유저 삭제 실패!!!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -84,7 +84,7 @@ public class MatchsDAO {
 		}
 	}
 
-	// 내 강사목록 보여주기
+	// 내 강사목록 보여주기!
 	public boolean getMyInstInfo(String mem_id) {
 		String sql = "SELECT M.M_NO AS M_NO, M.MEM_ID AS MEM_ID,  U.U_NAME AS INST_NAME, "
 				+ "U.U_PHONE AS INST_PHONE, M.M_DATE AS M_DATE "

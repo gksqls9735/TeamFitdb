@@ -126,11 +126,11 @@ public class ExerciseDAO {
 			int i = pstmt.executeUpdate();
 
 			if (i == 1) {
-				System.out.println(ex.getE_name() + " 강의 등록 완료.");
-				System.out.println("강의 등록 성공!!!");
+				System.out.println(ex.getE_name() + " 강의 수정 완료.");
+				System.out.println("강의 수정 성공!!!");
 				success = true;
 			} else {
-				System.out.println("강의 등록 실패!!!");
+				System.out.println("강의 수정 실패!!!");
 			}
 
 		} catch (SQLException e) {
@@ -323,7 +323,7 @@ public class ExerciseDAO {
 
 	}
 
-	// 신청인원 줄이기	// 신청인원 줄이기
+	// 신청인원 줄이기
 	public void memCountReduce(Map<Integer, Integer> e_noCountList) {
 
 		String sql = "UPDATE EXERCISE SET E_MEMCOUNT = ? WHERE E_NO = ?";
