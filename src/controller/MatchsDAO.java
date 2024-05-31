@@ -101,16 +101,19 @@ public class MatchsDAO {
 
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				String header = String.format("%-7s %-8s %-10s %-15s %-13s",
+                        "일련번호", "내아이디", "강사이름", "전화번호", "등록일자");
+				System.out.println(header);
 				int m_no = rs.getInt("M_NO");
 				String myid = rs.getString("MEM_ID");
 				String inst_name = rs.getString("INST_NAME");
 				String inst_phone = rs.getString("INST_PHONE");
 				Date m_date = rs.getDate("M_DATE");
 				check = true;
-				System.out.println("---------------------------------");
-				System.out.println("일련번호\t|" + m_no + "\n내아이디\t|" + myid + "\n강사이름\t|" + inst_name + "\n전화번호\t|"
-						+ inst_phone + "\n등록일자\t|" + m_date);	
-				System.out.println("---------------------------------");
+				System.out.println("----------------------------------------------------------------");
+				System.out.println(String.format("%-8d %-10s %-10s %-16s %-10s",
+                        m_no, myid, inst_name, inst_phone, m_date));	
+				System.out.println("----------------------------------------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

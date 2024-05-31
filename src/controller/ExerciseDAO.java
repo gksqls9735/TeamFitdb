@@ -27,6 +27,10 @@ public class ExerciseDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			System.out.println("강의 목록 출력");
+			String header = String.format("%-8s %-10s %-10s %-13s %-10s %-18s %-10s",
+                    "일련번호", "운동종목", "가격", "날짜", "시작시간", "장소", "정원");
+			System.out.println(header);
+			System.out.println("------------------------------------------------------------------------------------------");
 			while (rs.next()) {
 				ex.setE_no(rs.getInt("E_NO"));
 				ex.setE_name(rs.getString("E_NAME"));
@@ -36,10 +40,9 @@ public class ExerciseDAO {
 				ex.setE_addr(rs.getString("E_ADDR"));
 				ex.setE_maxmem(rs.getInt("E_MAXMEM"));
 				ex.setE_memCount(rs.getInt("E_MEMCOUNT"));
-				System.out.println("---------------------------------");
 				System.out.println(ex.toString());
-				System.out.println("---------------------------------");
 			}
+			System.out.println("------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -209,6 +212,11 @@ public class ExerciseDAO {
 			if (!rs.next()) {
 				System.out.println("해당 종목의 강의가 존재하지 않습니다.");
 			} else {
+				System.out.println("검색 결과");
+				String header = String.format("%-8s %-10s %-10s %-13s %-10s %-18s %-10s",
+	                    "일련번호", "운동종목", "가격", "날짜", "시작시간", "장소", "정원");
+				System.out.println(header);
+				System.out.println("------------------------------------------------------------------------------------------");
 				do {
 					ExerciseVO ev = new ExerciseVO();
 					ev.setE_no(rs.getInt("E_NO"));
@@ -219,11 +227,10 @@ public class ExerciseDAO {
 					ev.setE_addr(rs.getString("E_ADDR"));
 					ev.setE_maxmem(rs.getInt("E_MAXMEM"));
 					ev.setE_memCount(rs.getInt("E_MEMCOUNT"));
-					System.out.println("---------------------------------");
 					System.out.println(ev.toString());
-					System.out.println("---------------------------------");
 				} while (rs.next());
 			}
+			System.out.println("------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
