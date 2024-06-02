@@ -275,11 +275,13 @@ public class UserDAO {
 			pstmt.setString(1, u_id);
 
 			rs = pstmt.executeQuery();
-			System.out.println("유저 정보 출력");
+			System.out.println("\t\t\t\t\t\t\t    유저 정보 출력");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			if (rs.next()) {
 				String header = String.format("%-10s %-10s %-13s %-10s %-17s %-10s", "일련번호", "아이디", "비밀번호", "이름",
 						"전화번호", "강사여부");
-				System.out.println(header);
+				System.out.println("\t\t\t    " + header);
 				u.setU_no(rs.getInt("U_NO"));
 				u.setU_id(rs.getString("U_ID"));
 				u.setU_pw(rs.getString("U_PW"));
@@ -287,10 +289,10 @@ public class UserDAO {
 				u.setU_phone(rs.getString("U_PHONE"));
 				u.setIs_instructor(rs.getString("IS_INSTRUCTOR"));
 				System.out.println(
-						"-------------------------------------------------------------------------------------------");
-				System.out.println(u.toString());
+						"----------------------------------------------------------------------------------------------------------------------------------");
+				System.out.println("\t\t\t    " + u.toString());
 				System.out.println(
-						"-------------------------------------------------------------------------------------------");
+						"----------------------------------------------------------------------------------------------------------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -406,17 +408,21 @@ public class UserDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			String header = String.format("%-8s %-13s %-10s", "일련번호", "강사ID", "강사이름");
-			System.out.println(header);
-			System.out.println("---------------------------------");
+			String header = String.format("%-13s %-18s %-10s", "일련번호", "강사ID", "강사이름");
+			System.out.println("\t\t\t\t\t\t\t     강사 리스트");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("\t\t\t\t\t      " + header);
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			while (rs.next()) {
 				u_no = rs.getInt("U_NO");
 				u_id = rs.getString("U_ID");
 				u_name = rs.getString("U_NAME");
-				System.out.println(String.format("%-9d %-14s %-10s",
-                        u_no, u_id, u_name));
+				System.out.println("\t\t\t\t\t      " + String.format("%-14d %-19s %-10s", u_no, u_id, u_name));
 			}
-			System.out.println("---------------------------------");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

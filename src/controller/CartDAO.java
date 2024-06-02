@@ -230,15 +230,22 @@ public class CartDAO {
 			pstmt.setString(1, u_id);
 			rs = pstmt.executeQuery();
 
-			String header = String.format("%-9s %-10s %-9s %-9s %-9s %-9s %-9s %-20s %-9s %-9s", "일련번호", "학생ID",
-					"유저이름", "강의번호", "운동종목", "강의날짜", "강의시간", "강의장소", "가격", "결제여부");
-			System.out.println(header);
-			System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("\t\t\t\t\t\t\t    수강 신청 목록");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+			String header = String.format("%-9s %-10s %-9s %-9s %-9s %-9s %-9s %-20s %-9s %-9s", "일련번호", "학생ID", "유저이름",
+					"강의번호", "운동종목", "강의날짜", "강의시간", "강의장소", "가격", "결제여부");
+			System.out.println("\t" + header);
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			while (rs.next()) {
-				System.out.println(String.format("%-10d %-11s %-10s %-10d %-9s %-11s %-10s %-18s %-10d %-10s", rs.getInt("C_NO"), u_id, rs.getString("U_NAME"),
-						rs.getInt("E_NO"), rs.getString("E_NAME"), rs.getString("E_DATE"), rs.getString("E_TIME"), rs.getString("E_ADDR"), rs.getInt("E_PRICE"), rs.getString("C_PAYMENT_STATUS")));
+				System.out.println("\t" + String.format("%-10d %-11s %-10s %-10d %-9s %-11s %-10s %-18s %-10d %-10s",
+						rs.getInt("C_NO"), u_id, rs.getString("U_NAME"), rs.getInt("E_NO"), rs.getString("E_NAME"),
+						rs.getString("E_DATE"), rs.getString("E_TIME"), rs.getString("E_ADDR"), rs.getInt("E_PRICE"),
+						rs.getString("C_PAYMENT_STATUS")));
 			}
-			System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
